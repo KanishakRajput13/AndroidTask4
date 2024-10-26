@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -34,39 +35,44 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
 
+        val navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setRestoreState(true)
+            .setPopUpTo(R.id.nav_graph, true)
+            .build()
         //setting the logic of bottom navigation
 
         val userName = bottomNavigationView.menu.findItem(R.id.username)
         userName.setOnMenuItemClickListener {
-            navController.navigate(R.id.userFragment2)
+            navController.navigate(R.id.userFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.username).isChecked = true
             true
         }
 
         val home = bottomNavigationView.menu.findItem(R.id.home)
         home.setOnMenuItemClickListener {
-            navController.navigate(R.id.homeFragment2)
+            navController.navigate(R.id.homeFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.home).isChecked = true
             true
         }
 
         val badges = bottomNavigationView.menu.findItem(R.id.badges)
         badges.setOnMenuItemClickListener {
-            navController.navigate(R.id.badgeFragment2)
+            navController.navigate(R.id.badgeFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.badges).isChecked = true
             true
         }
 
         val solved = bottomNavigationView.menu.findItem(R.id.solved)
         solved.setOnMenuItemClickListener {
-            navController.navigate(R.id.solvedFragment2)
+            navController.navigate(R.id.solvedFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.solved).isChecked = true
             true
         }
 
         val submissions = bottomNavigationView.menu.findItem(R.id.submission)
         submissions.setOnMenuItemClickListener {
-            navController.navigate(R.id.submissionFragment2)
+            navController.navigate(R.id.submissionFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.submission).isChecked = true
             true
         }
@@ -89,28 +95,24 @@ class MainActivity : AppCompatActivity() {
 
             when(it.itemId){
                 R.id.home -> {
-                    navController.navigate(R.id.homeFragment2)
+                    navController.navigate(R.id.homeFragment2,null,navOptions)
                     bottomNavigationView.menu.findItem(R.id.home).isChecked = true
                 }
                 R.id.badges ->{
-                    navController.navigate(R.id.badgeFragment2)
+                    navController.navigate(R.id.badgeFragment2,null,navOptions)
                     bottomNavigationView.menu.findItem(R.id.badges).isChecked = true
                 }
                 R.id.solved ->{
-                    navController.navigate(R.id.solvedFragment2)
+                    navController.navigate(R.id.solvedFragment2,null,navOptions)
                     bottomNavigationView.menu.findItem(R.id.solved).isChecked = true
                 }
                 R.id.submission ->{
-                    navController.navigate(R.id.submissionFragment2)
+                    navController.navigate(R.id.submissionFragment2,null,navOptions)
                     bottomNavigationView.menu.findItem(R.id.submission).isChecked = true
                 }
                 R.id.username ->{
-                    navController.navigate(R.id.userFragment2)
+                    navController.navigate(R.id.userFragment2,null,navOptions)
                     bottomNavigationView.menu.findItem(R.id.username).isChecked = true
-                }
-                R.id.change ->{
-                    navController.navigate(R.id.homeFragment2)
-                    bottomNavigationView.menu.findItem(R.id.home).isChecked = true
                 }
             }
             drawerLayout.closeDrawers()
@@ -126,8 +128,13 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
     override fun onBackPressed() {
+        val navOptions = NavOptions.Builder()
+            .setLaunchSingleTop(true)
+            .setRestoreState(true)
+            .setPopUpTo(R.id.nav_graph, true)
+            .build()
         if (navController.currentDestination?.id != R.id.homeFragment2) {
-            navController.popBackStack(R.id.homeFragment2, false)
+            navController.navigate(R.id.homeFragment2,null,navOptions)
             bottomNavigationView.menu.findItem(R.id.home).isChecked = true
         } else {
             super.onBackPressed()

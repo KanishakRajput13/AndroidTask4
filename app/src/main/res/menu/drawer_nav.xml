@@ -15,7 +15,4 @@
     <item android:title="Submission"
         android:id="@+id/submission"
         android:icon="@drawable/baseline_bookmark_added_24"/>
-    <item android:title="Change Username"
-        android:id="@+id/change"
-        android:icon="@drawable/baseline_change_circle_24"/>
 </menu>
