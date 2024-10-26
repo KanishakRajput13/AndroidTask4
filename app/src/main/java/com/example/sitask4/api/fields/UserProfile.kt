@@ -1,19 +1,19 @@
 package com.example.sitask4.api.fields
 
 data class UserProfile(
-    val username: String,
-    val name: String,
-    val birthday: String?,
-    val avatar: String,
-    val ranking: Int,
-    val reputation: Int,
-    val gitHub: String?,
-    val twitter: String?,
-    val linkedIN: String?,
-    val website: List<String>,
-    val country: String?,
-    val company: String?,
-    val school: String?,
-    val skillTags: List<String>,
-    val about: String
+    val about: String?,
+    val avatar: String?,
+    val birthday: Any?,
+    val company: Any?,
+    val country: Any?,
+    val gitHub: Any?,
+    val linkedIN: Any?,
+    val name: String?,
+    val ranking: Int?,
+    val reputation: Int?,
+    val school: Any?,
+    val skillTags: List<Any>?,
+    val twitter: Any?,
+    val username: String?,
+    val website: List<Any>?
 )

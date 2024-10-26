@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)

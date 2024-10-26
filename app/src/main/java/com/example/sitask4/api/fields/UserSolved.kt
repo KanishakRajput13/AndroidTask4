@@ -1,16 +1,10 @@
 package com.example.sitask4.api.fields
 
-data class UserSolved (
-    val solvedProblem: Int,
+data class UserSolved(
+    val acSubmissionNum: List<AcSubmissionNum>,
     val easySolved: Int,
-    val mediumSolved: Int,
     val hardSolved: Int,
-    val totalSubmissionNum: List<SubmissionStats>,
-    val acSubmissionNum: List<SubmissionStats>
-)
-
-data class SubmissionStats(
-    val difficulty: String,
-    val count: Int,
-    val submissions: Int
+    val mediumSolved: Int,
+    val solvedProblem: Int,
+    val totalSubmissionNum: List<TotalSubmissionNum>
 )

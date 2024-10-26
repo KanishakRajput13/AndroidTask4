@@ -14,23 +14,23 @@ interface APIService {
     @GET("/{username}")
     suspend fun getUserProfile(
         @Path("username") username: String
-    ): Response<UserProfile>
+    ): UserProfile
 
     //to get the user badges from API
     @GET("/{username}/badges")
     suspend fun getUserBadges(
         @Path("username") username: String
-    ): Response<UserBadges>
+    ): UserBadges
 
     //to get the user solved problems from API
     @GET("/{username}/solved")
     suspend fun getUserSolved(
         @Path("username") username: String
-    ): Response<UserSolved>
+    ): UserSolved
 
     //to get the user's limited submissions from API
-    @GET("/{username}/submissions")
+    @GET("/{username}/submissions?limit=20")
     suspend fun getUserSubmissions(
         @Path("username") username: String
-    ): Response<UserSubmissions>
+    ): UserSubmissions
 }

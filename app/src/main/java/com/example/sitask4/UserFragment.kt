@@ -5,29 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.example.sitask4.api.fields.UserProfile
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [UserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class UserFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var text: TextView
+    private lateinit var avatarImageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +25,51 @@ class UserFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_user, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UserFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        text = view.findViewById(R.id.userNameTextView)
+        avatarImageView = view.findViewById(R.id.avatarImageView)
+        val username = arguments?.getString("username") ?: ""
+        apiCall(username)
+    }
+
+    private fun apiCall(userName: String) {
+        lifecycleScope.launch {
+            try {
+                val service = retrofit.api.getUserProfile(userName)
+                text.text = formatUserProfile(service)
+                loadImage(service.avatar)
+            } catch (e: Exception) {
+                text.text = "Error"
             }
+        }
+    }
+
+    private fun formatUserProfile(userProfile: UserProfile): String {
+        return """
+            Username: ${userProfile.username ?: "N/A"}
+            Name: ${userProfile.name ?: "N/A"}
+            About: ${userProfile.about ?: "N/A"}
+            Birthday: ${userProfile.birthday ?: "N/A"}
+            Company: ${userProfile.company ?: "N/A"}
+            Country: ${userProfile.country ?: "N/A"}
+            GitHub: ${userProfile.gitHub ?: "N/A"}
+            LinkedIn: ${userProfile.linkedIN ?: "N/A"}
+            Ranking: ${userProfile.ranking ?: "N/A"}
+            Reputation: ${userProfile.reputation ?: "N/A"}
+            School: ${userProfile.school ?: "N/A"}
+            Skills: ${userProfile.skillTags?.joinToString(", ") ?: "N/A"}
+            Twitter: ${userProfile.twitter ?: "N/A"}
+            Website: ${userProfile.website?.joinToString(", ") ?: "N/A"}
+        """.trimIndent()
+    }
+
+    private fun loadImage(avatarUrl: String?) {
+        if (!avatarUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(avatarUrl)
+                .into(avatarImageView)
+        }
     }
 }
