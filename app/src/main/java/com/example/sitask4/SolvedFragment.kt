@@ -34,7 +34,7 @@ class SolvedFragment : Fragment() {
         apiCall(username)
     }
 
-    private fun apiCall(userName: String) {
+    fun apiCall(userName: String) {
         lifecycleScope.launch {
             try {
                 val service = retrofit.api.getUserSolved(userName)
@@ -45,7 +45,7 @@ class SolvedFragment : Fragment() {
         }
     }
 
-    private fun displaySolvedProblems(userSolved: UserSolved) {
+    fun displaySolvedProblems(userSolved: UserSolved) {
         solvedProblemsTextView.text = "Solved Problems: ${userSolved.solvedProblem}"
 
         solvedProblemsContainer.removeAllViews()

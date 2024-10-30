@@ -1,32 +1,27 @@
-package com.example.sitask4
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
+import com.example.sitask4.R
+import com.example.sitask4.SubmissionAdapter
 import com.example.sitask4.api.fields.Submission
+import com.example.sitask4.retrofit
 import kotlinx.coroutines.launch
 
-class SubmissionFragment : Fragment() {
+class SubmissionsFragment : Fragment() {
 
-    private lateinit var submissionAdapter : SubmissionAdapter
+    private lateinit var submissionAdapter: SubmissionAdapter
     private val submissions = mutableListOf<Submission>()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_submission, container, false)
+        return inflater.inflate(R.layout.sub, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,14 +32,14 @@ class SubmissionFragment : Fragment() {
         submissionAdapter = SubmissionAdapter(submissions)
         recyclerView.adapter = submissionAdapter
 
-        // Test with dummy data
-        submissions.add(Submission("Test Title", "test-title", "1234567890", "Accepted", "cpp"))
+        val username = arguments?.getString("username") ?: ""
+        apiCall(username)
     }
 
-    private fun apiCall(username : String){
+    private fun apiCall(userName: String) {
         lifecycleScope.launch {
             try {
-                val service = retrofit.api.getUserSubmissions(username)
+                val service = retrofit.api.getUserSubmissions(userName)
                 val submissionList = service.submission
                 submissions.addAll(submissionList ?: emptyList())
             } catch (e: Exception) {
@@ -52,6 +47,4 @@ class SubmissionFragment : Fragment() {
             }
         }
     }
-
-
 }

@@ -33,15 +33,42 @@ class HomeFragment : Fragment() {
             .setPopUpTo(R.id.nav_graph, true)
             .build()
 
-        val submitButton = view.findViewById<View>(R.id.submitButton)
+        val UserButton = view.findViewById<View>(R.id.userprofileButton)
+        val BadgesButton = view.findViewById<View>(R.id.badgesButton)
+        val SolvedButton = view.findViewById<View>(R.id.solvedButton)
+        val SubmissionButton = view.findViewById<View>(R.id.submissionsButton)
         val editText = view.findViewById<EditText>(R.id.editTextText)
 
-        submitButton.setOnClickListener {
+        UserButton.setOnClickListener {
             val username = editText.text.toString()
             val bundle = Bundle().apply {
                 putString("username", username)
             }
-            navController.navigate(R.id.submissionFragment2, bundle, navOptions)
+            navController.navigate(R.id.userFragment2, bundle, navOptions)
+        }
+
+        BadgesButton.setOnClickListener {
+            val username = editText.text.toString()
+            val bundle = Bundle().apply {
+                putString("username", username)
+            }
+            navController.navigate(R.id.badgeFragment2, null, navOptions)
+        }
+
+        SolvedButton.setOnClickListener {
+            val username = editText.text.toString()
+            val bundle = Bundle().apply {
+                putString("username", username)
+            }
+            navController.navigate(R.id.solvedFragment2, null, navOptions)
+        }
+
+        SubmissionButton.setOnClickListener {
+            val username = editText.text.toString()
+            val bundle = Bundle().apply {
+                putString("username", username)
+            }
+            navController.navigate(R.id.submissionFragment2, null, navOptions)
         }
     }
 }

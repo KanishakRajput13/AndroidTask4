@@ -35,7 +35,7 @@
         android:id="@+id/submissionFragment2"
         android:name="com.example.sitask4.SubmissionFragment"
         android:label="fragment_submission"
-        tools:layout="@layout/fragment_submission" >
+        tools:layout="@layout/sub" >
         <action
             android:id="@+id/action_submissionFragment2_to_solvedFragment2"
             app:destination="@id/solvedFragment2" />
